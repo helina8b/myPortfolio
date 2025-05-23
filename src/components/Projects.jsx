@@ -9,7 +9,7 @@ useEffect(() => {
   fetch('https://api.github.com/users/helina8b/repos')
     .then(response => response.json())
     .then(data => {
-      const filteredData = data.filter(repo => repo.name.toLowerCase() !== 'myportfolio'); // ⛔ exclude this
+      const filteredData = data.filter(repo => repo.name.trim() !== 'myPortfolio'); 
       const fetchedProjects = filteredData.map(repo => ({
         title: repo.name,
         description: repo.description || 'No description provided',
