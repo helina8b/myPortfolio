@@ -5,20 +5,22 @@ import { Container, Card } from 'react-bootstrap';
 function Projects() {
   const [projects, setProjects] = useState([]);
 
-  useEffect(() => {
-    fetch('https://api.github.com/users/helina8b/repos')
-      .then(response => response.json())
-      .then(data => {
-        const fetchedProjects = data.map(repo => ({
-          title: repo.name,
-          description: repo.description || 'No description provided',
-          url: repo.html_url,
-          image: getImageForProject(repo.name),
-        }));
-        setProjects(fetchedProjects);
-      })
-      .catch(error => console.error('Error fetching GitHub repositories:', error));
-  }, []);
+useEffect(() => {
+  fetch('https://api.github.com/users/helina8b/repos')
+    .then(response => response.json())
+    .then(data => {
+      const filteredData = data.filter(repo => repo.name.toLowerCase() !== 'myportfolio'); // ⛔ exclude this
+      const fetchedProjects = filteredData.map(repo => ({
+        title: repo.name,
+        description: repo.description || 'No description provided',
+        url: repo.html_url,
+        image: getImageForProject(repo.name),
+      }));
+      setProjects(fetchedProjects);
+    })
+    .catch(error => console.error('Error fetching GitHub repositories:', error));
+}, []);
+
 
   const getImageForProject = (name) => {
   
